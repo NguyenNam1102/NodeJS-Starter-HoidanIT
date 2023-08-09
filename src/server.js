@@ -7,7 +7,10 @@ const app = express()
 const port = process.env.PORT || 8888
 const hostname = process.env.HOST_NAME
 
+app.use(express.static('public'))
+
 configViewEngine(app)
+app.use(express.static(path.join(__dirname, 'public')))
 app.get('/', (req, res) => {
     res.render('index.ejs')
 })
