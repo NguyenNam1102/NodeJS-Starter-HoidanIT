@@ -1,19 +1,18 @@
-import express from 'express'
-import configViewEngine from './configs/viewEngine'
-const path = require('path')
 require('dotenv').config()
+import express from 'express'
+import configViewEngine from './config/viewEngine'
+
+const webRoutes = require('./routers/web')
 
 const app = express()
 const port = process.env.PORT || 8888
 const hostname = process.env.HOST_NAME
 
-app.use(express.static('public'))
-
+// config template engine
 configViewEngine(app)
-app.use(express.static(path.join(__dirname, 'public')))
-app.get('/', (req, res) => {
-    res.render('index.ejs')
-})
+
+// khai báo route
+app.use('/', webRoutes)
 
 app.listen(port, hostname, () => {
     console.log(`Example app listening on port ${port}`)
